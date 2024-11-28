@@ -1,22 +1,41 @@
 import Search from '../components/search';
 import Card from '../components/card';
-import { CHAR_DATA } from '../types/data';
+import { useEffect, FC } from 'react';
+import { observer } from 'mobx-react-lite';
 
-export default function Characters(){
+import charactersStore from '../stores/CharactersStore';
+import Pagination from '../components/pagination';
+
+const Characters: FC = () => {
+
+    useEffect(() => {
+        charactersStore.getCharactersList();
+      }, []);
+
+    const { characters, loading, charactersDataContainer } = charactersStore;
+
     return (
         <>
             <section className='main-section'>
                 <div className='characters-header'>
                     <p className='page-name'>Characters</p>
-                    <p className='page-count'>({CHAR_DATA.length})</p>
+                    <p className='page-count'>({charactersDataContainer.total})</p>
                 </div>
-                <Search/>
-                <section className='cards'>
-                    {CHAR_DATA.map((char) => (
+                <Search placeholder='Search for Characters by Name' type = 'characters'/>
+                {loading ? <div className='loadings'>Loading...</div> : characters.length > 0 ? (
+                <>
+                    <section className='cards'>
+                    {characters.map((char) => (
                         <Card page = {char}/>
                     ))}
-                </section>
+                    </section>
+                    <Pagination total = {charactersDataContainer.total} limit = {charactersDataContainer.limit} offset = {charactersDataContainer.offset} type = "characters"/>
+                </>
+                ) : (<div className='loadings'>No characters found</div>)}
             </section>
         </>
     );
 }
+
+export default observer(Characters);
+
