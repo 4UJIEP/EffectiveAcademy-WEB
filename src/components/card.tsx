@@ -2,17 +2,23 @@ import { Link } from 'react-router-dom';
 
 export default function Card(props: any)
 {
-    const char = props.page;
-    var sliced = char.body.slice(0,50);
-    if (sliced.length < char.body.length) 
-        {
-        sliced += '...';
+    const page = props.page;
+    if (page.description != null)
+    {
+        var sliced = page.description.slice(0,80);
+        if (sliced.length < page.description.length) 
+            {
+            sliced += '...';
+        }
     }
-    
+    else
+    {
+        sliced = page.description;
+    }
     return (
-        <Link className='card' to={`${char.id}`}>
-            <img src={!char.image ? '../public/char_images/no_image.jpg' : char.image}/>
-            <p className="card-name">{char.title}</p>
+        <Link className='card' to={`${page.id}`}>
+            <img src = {(page.thumbnail.path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") ? 'no_image.jpg' : page.thumbnail.path + "." + page.thumbnail.extension}/>
+            <p className="card-name">{page.name ? page.name : page.title}</p>
             <p className="card-desc">{sliced}</p>
         </Link>
     );

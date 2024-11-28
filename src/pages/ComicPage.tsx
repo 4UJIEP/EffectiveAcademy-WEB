@@ -1,26 +1,45 @@
-import { useParams } from "react-router-dom";
-import { ComicByID } from "../types/data";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import { Comic } from "../types/data";
+import api from "../api";
 
-export default function ComicPage(){
+const ComicPage = () => {
+    const { comicId } = useParams();
 
-    const params = useParams();
-    const comic = ComicByID(`${params.comicId}`);
+    const [comic, setComic] = useState<Comic | null>(null);
+
+    const getById = async (id: number | undefined) =>
+        {
+            if (id !== undefined)
+            {
+                await api.posts.getComic(id).then((res) => {setComic(res.data.results[0]);});
+            }
+            else
+            {
+                setComic(null);
+            }
+        }
+    useEffect(() => {
+        getById(Number(comicId));
+    }, [comicId]);
+
     return (
         <>
             <section className='content-page'>
-                <img src = {!comic.image ? '../public/char_images/no_image.jpg' : comic.image}/>
+                <img src = {(comic?.thumbnail.path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") ? 'no_image.jpg' : comic?.thumbnail.path + "." + comic?.thumbnail.extension}/>
                 <div className="content-info">
                     <div className='content-name'>
-                        <p className="name-text">{comic.title}</p>
-                        <p>{comic.body}</p>
+                        <p className="name-text">{comic?.title}</p>
+                        <p>{comic?.description}</p>
                     </div>
                     <div className="content-list name-text">
                         Characters
-                        <div className="def-text">
-                            {comic.links.map((link: string) => (
-                                <p>
-                                    {link}
-                                </p>
+                        <div>
+                            {comic?.characters?.items && comic.characters.items.map((char) => (
+                            <Link to={"/characters/" + char.resourceURI?.split("/")[6]} key={char.resourceURI?.split("/")[6]} className="link-to-object">
+                                <p>{char.name}</p>
+                            </Link>
                             ))}
                         </div>
                     </div>
@@ -29,3 +48,5 @@ export default function ComicPage(){
         </>
     );
 }
+
+export default observer(ComicPage);
