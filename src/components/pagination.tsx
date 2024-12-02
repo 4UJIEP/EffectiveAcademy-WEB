@@ -10,8 +10,6 @@ type PaginationProps =
     type: string;
 }
 
-
-
 const Pagination: React.FC<PaginationProps> = ({total, limit, offset, type}) =>
 {
     const totalPages = Math.ceil(total / limit);
@@ -22,8 +20,7 @@ const Pagination: React.FC<PaginationProps> = ({total, limit, offset, type}) =>
         {
             if (type === "characters") 
             {
-                charsStore.params.offset =
-                (Math.floor(offset / limit) - 1) * limit;
+                charsStore.params.offset = (Math.floor(offset / limit) - 1) * limit;
                 charsStore.getCharactersList();
             } 
             else if (type === "comics") 
@@ -40,8 +37,7 @@ const Pagination: React.FC<PaginationProps> = ({total, limit, offset, type}) =>
         {
             if (type === "characters") 
             {
-                charsStore.params.offset =
-                (Math.floor(offset / limit) + 1) * limit;
+                charsStore.params.offset = (Math.floor(offset / limit) + 1) * limit;
                 charsStore.getCharactersList();
             } 
             else if (type === "comics") 
@@ -54,9 +50,9 @@ const Pagination: React.FC<PaginationProps> = ({total, limit, offset, type}) =>
 
     return (
         <div  className="pagination">
-            <button onClick={previousPage} disabled = {Math.floor(offset / limit) === 0}>&lt;</button>
+            <button onClick={previousPage} className = {(Math.floor(offset / limit) === 0) ? 'hidden'  : ''}>&lt;</button>
             <span>{`${total > 0 ? Math.floor(offset / limit) + 1 : 0} / ${totalPages}`}</span>
-            <button onClick={nextPage} disabled = {Math.floor(offset / limit) === totalPages}>&gt;</button>
+            <button onClick={nextPage} className = {(Math.floor(offset / limit) === totalPages) ? 'hidden'  : ''}>&gt;</button>
         </div>
     );
 }

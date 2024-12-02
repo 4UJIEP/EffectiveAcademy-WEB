@@ -26,28 +26,25 @@ const CharacterPage = () => {
     }, [characterId]);
 
     return (
-        <>
-            <section className='content-page'>
-                <img src = {(character?.thumbnail.path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") ? 'no_image.jpg' : character?.thumbnail.path + "." + character?.thumbnail.extension}/>
-                <div className="content-info">
-                    <div className='content-name'>
-                        <p className="name-text">{character?.name}</p>
-                        <p>{character?.description}</p>
-                    </div>
-                    <div className="content-list name-text">
-                        Comics
-                        <div>
-                            {character?.comics?.items && character.comics.items.map((comic) => (
-                            <Link to={"/comics/" + comic.resourceURI?.split("/")[6]} key={comic.resourceURI?.split("/")[6]} className="link-to-object">
-                                <p>{comic.name}</p>
-                            </Link>
-                            ))}
-                        </div>
+        <section className='content-page'>
+            <img src = {(character?.thumbnail.path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") ? 'no_image.jpg' : character?.thumbnail.path + "." + character?.thumbnail.extension}/>
+            <div className="content-info">
+                <div className='content-name'>
+                    <p className="name-text">{character?.name}</p>
+                    <p>{character?.description}</p>
+                </div>
+                <div className="content-list name-text">
+                    Comics
+                    <div>
+                        {character?.comics?.items && character.comics.items.map((comic) => (
+                        <Link to={"/comics/" + comic.resourceURI?.split("/")[6]} key={comic.resourceURI?.split("/")[6]} className="link-to-object">
+                            <p>{comic.name}</p>
+                        </Link>
+                        ))}
                     </div>
                 </div>
-            </section>
-            
-        </>
+            </div>
+        </section>
     );
 }
 

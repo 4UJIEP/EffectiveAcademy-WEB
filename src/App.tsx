@@ -6,6 +6,7 @@ import Comics from './pages/Comics.tsx'
 import CharacterPage from './pages/CharacterPage.tsx'
 import ComicPage from './pages/ComicPage.tsx'
 import Layout from './pages/Layout.tsx'
+import Favourites from './pages/Favourites.tsx'
 
 function AppRoutes()
 {
@@ -13,7 +14,7 @@ function AppRoutes()
     {
       path: "/",
       element: <Layout/>,
-      errorElement: <NotFoundPage />,
+      errorElement: <NotFoundPage/>,
       children: [
         {
           path: "/", 
@@ -21,20 +22,24 @@ function AppRoutes()
         },
         {
           path: "/characters", 
-          element: <Characters />
+          element: <Characters/>
         },
         {
           path: '/characters/:characterId',
-          element: <CharacterPage />,
+          element: <CharacterPage/>,
         },
         {
           path: '/comics',
-          element: <Comics />,
+          element: <Comics/>,
         },
         {
           path: '/comics/:comicId',
-          element: <ComicPage />,
-        }
+          element: <ComicPage/>,
+        },
+        {
+          path: "/favourites", 
+          element: <Favourites/>,
+        },
       ]
     }
   ];
@@ -43,7 +48,7 @@ function AppRoutes()
 
 function App()
 {
-  return (<BrowserRouter><AppRoutes /></BrowserRouter>);
+  return (<BrowserRouter><AppRoutes/></BrowserRouter>);
 }
 
 export default App;

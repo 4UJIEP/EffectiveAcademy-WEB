@@ -116,13 +116,13 @@ export type LinkInfo = {
   name: string;
 };
 
-export type Item = {
-  id: number;
-  name: string;
-  img: string;
-  description: string;
-  type: string;
-};
+// export type Item = {
+//   id: number;
+//   name: string;
+//   img: string;
+//   description: string;
+//   type: string;
+// };
 
 export type CharacterSearchParams = {
   name?: string;
