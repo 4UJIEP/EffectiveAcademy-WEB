@@ -8,6 +8,7 @@ export default function Header()
             <nav className='navigation'>
                 <NavLink to="/characters" className={({isActive}) => { return isActive ? 'navigation-button-active' : 'navigation-button' }}>Characters</NavLink>
                 <NavLink to="/comics" className={({isActive}) => { return isActive ? 'navigation-button-active' : 'navigation-button' }}>Comics</NavLink>
+                <NavLink to="/favourites" className={({isActive}) => { return isActive ? 'navigation-button-active' : 'navigation-button' }}>Favourites</NavLink>
             </nav>
         </header>
     );
