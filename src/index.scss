@@ -18,6 +18,15 @@
   align-items: end;
 }
 
+.favourites-header
+{
+  display: flex;
+  padding: 30px 0 10px 0;
+  margin: 0 30px 0 30px;
+  align-items: end;
+  border-bottom: 1px solid #dbdbdb;
+}
+
 .page-name
 {
   font-size: 50px;
@@ -25,6 +34,7 @@
   font-weight: bold;
   color: #333333;
 }
+
 
 .page-count
 {
@@ -83,6 +93,7 @@ header
 .navigation:hover > :not(:hover)
 {
   filter: blur(0.5px);
+  text-decoration: none;
   opacity: 0.8;
 }
 
@@ -105,6 +116,7 @@ footer
 
 .main-section
 {
+  min-height: 1000px;
   width: 100%;
 }
 
@@ -204,6 +216,12 @@ footer
   object-fit: cover;
 }
 
+.card input[type=checkbox]
+{
+  border: none;
+  size: 50px;
+}
+
 .cards
 {
   margin: 0px 30px 0px;
@@ -215,6 +233,7 @@ footer
 {
   display: flex;
   flex-direction: column;
+  min-height: 1000px;
 }
 
 .content-info
@@ -286,15 +305,15 @@ footer
   font-size: 1rem;
 }
 
-.pagination span
-{
-  font-size: 1rem;
-}
-
-.pagination .pag-btn
+.pagination button:hover
 {
   background-color: #feba42;
   color: #ffffff;
+}
+
+.pagination span
+{
+  font-size: 1rem;
 }
 
 .hidden
@@ -309,3 +328,27 @@ footer
   margin: 200px auto;
   font-size: 30px;
 }
+
+.feature-star
+{
+  position: absolute;
+  color: #33333300;
+  font-size: 30px;
+  padding: 3px 8px;
+  cursor: pointer;
+  -webkit-text-stroke: 2px #ffffff;
+  transition: all 0.2s ease;
+  text-shadow: 0 4px 15px #333333;
+}
+
+.feature-star:hover
+{
+  -webkit-text-stroke: 2px #feba42;
+}
+
+.feature-star.active
+{
+  color: #feba42;
+  -webkit-text-stroke: 2px #feba42;
+}
+
