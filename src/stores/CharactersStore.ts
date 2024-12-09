@@ -11,7 +11,7 @@ class CharactersStore
 
     loading: boolean = false;
 
-    params: CharacterSearchParams = {limit: 60};
+    params: CharacterSearchParams = {limit: 100};
 
     constructor() { makeAutoObservable(this); }
 
@@ -26,7 +26,7 @@ class CharactersStore
             const characterDataContainer = charactersDataWrapper.data;
 
             runInAction(() => {
-                this.characters = characters;
+                this.characters = [...this.characters, ...characters];
                 this.charactersDataContainer = characterDataContainer;
             });
         }

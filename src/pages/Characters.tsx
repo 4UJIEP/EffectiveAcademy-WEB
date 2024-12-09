@@ -1,18 +1,28 @@
 import Search from '../components/search';
 import Card from '../components/card';
-import { useEffect, FC } from 'react';
+import { useEffect, FC, useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import { VirtuosoGrid } from 'react-virtuoso';
 
 import charactersStore from '../stores/CharactersStore';
-import Pagination from '../components/pagination';
+import Loading from '../components/loading';
 
 const Characters: FC = () => {
+    const [offset, setOffset] = useState(0);
+    
+    const { characters, loading, charactersDataContainer } = charactersStore;
 
     useEffect(() => {
         charactersStore.getCharactersList();
-      }, []);
+    }, []);
+    
 
-    const { characters, loading, charactersDataContainer } = charactersStore;
+    const loadMore = () =>
+    {
+        setOffset(offset + 100);
+        charactersStore.params.offset = offset + 100;
+        charactersStore.getCharactersList();
+    }
 
     return (
         <>
@@ -22,15 +32,17 @@ const Characters: FC = () => {
                     <p className='page-count'>({charactersDataContainer.total})</p>
                 </div>
                 <Search placeholder='Search for Characters by Name' type = 'characters'/>
-                {loading ? <div className='loadings'>Loading...</div> : characters.length > 0 ? (
-                <>
-                    <section className='cards'>
-                    {characters.map((char) => (
-                        <Card page = {char}/>
-                    ))}
-                    </section>
-                    <Pagination total = {charactersDataContainer.total} limit = {charactersDataContainer.limit} offset = {charactersDataContainer.offset} type = "characters"/>
-                </>
+                
+                {loading && characters.length === 0 ? <Loading/> : characters.length > 0 ? (
+                <VirtuosoGrid style = {{height: '100vh'}}
+                increaseViewportBy={200}
+                data={characters}
+                endReached={loadMore}
+                itemContent={(_, char) => <Card page = {char}/>}
+                components={{Footer: () => loading ? <Loading/> : null}}
+                listClassName='cards'>
+                
+                </VirtuosoGrid>
                 ) : (<div className='loadings'>No characters found</div>)}
             </section>
         </>
@@ -39,3 +51,8 @@ const Characters: FC = () => {
 
 export default observer(Characters);
 
+{/* <section className='cards'>
+{characters.map((char) => (
+    <Card page = {char}/>
+))}
+</section> */}

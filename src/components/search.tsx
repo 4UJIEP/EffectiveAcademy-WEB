@@ -25,8 +25,9 @@ const Search = ({placeholder, type}: SearchProps) => {
             } 
             else 
             {
-                charsStore.params = {};
+                charsStore.params = {limit: 100};
             }
+            charsStore.characters = [];
             charsStore.getCharactersList();
         } 
         else if (type === "comics") 
@@ -37,8 +38,9 @@ const Search = ({placeholder, type}: SearchProps) => {
             }
             else 
             {
-                comicsStore.params = {};
+                comicsStore.params = {limit: 100};
             }
+            comicsStore.comics = [];
             comicsStore.getComicsList();
         }
     }, [type]);
