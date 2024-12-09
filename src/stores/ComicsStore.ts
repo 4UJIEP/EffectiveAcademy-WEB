@@ -11,7 +11,7 @@ class ComicsStore
 
     loading: boolean = false;
 
-    params: ComicSearchParams = {limit: 60};
+    params: ComicSearchParams = {limit: 100};
 
     constructor() { makeAutoObservable(this); }
 
@@ -25,7 +25,7 @@ class ComicsStore
             const comicDataContainer = comicsDataWrapper.data;
 
             runInAction(() => {
-                this.comics = comics;
+                this.comics = [...this.comics, ...comics];
                 this.comicsDataContainer = comicDataContainer;
             });
         }
